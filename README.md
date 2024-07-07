@@ -6,7 +6,6 @@
 
 - [Overview](#overview)
 - [Features](#features)
-- [Application Structure](#application-structure)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
@@ -19,49 +18,39 @@
 
 ## Overview
 
-This application is built using .NET Core 8, utilizing Minimal API and Service Design Pattern for a streamlined and efficient structure. It allows users to generate short URLs from long URLs and store them in a SQL Server database.
+The Shortened URL Application leverages a modern .NET Core 8 framework to provide a sleek and efficient solution for URL shortening. Designed with Clean Architecture, this application ensures a robust and scalable codebase. By adopting the Minimal API, the application offers high performance and maintainability. 
+
+The application employs the following advanced design patterns and tools to enhance functionality and code organization:
+- **Clean Architecture**: A modular architecture that separates concerns and promotes a clear separation of layers.
+- **Repository Design Pattern**: Manages data access with repositories, ensuring a clean and abstracted data layer.
+- **Mediator Design Pattern**: Facilitates communication between components, improving decoupling and flexibility.
+- **CQRS (Command Query Responsibility Segregation) Design Pattern**: Differentiates between commands and queries to optimize performance and scalability.
+- **Mapster**: Efficiently maps entities to Data Transfer Objects (DTOs) for smooth data manipulation.
+- **Fluent Validation**: Validates incoming requests with an intuitive and fluent API.
+- **JWT for Authentication and Authorization**: Ensures secure access and user identity verification.
+- **Role-Based Authorization**: Provides fine-grained access control based on user roles.
 
 ## Features
 
-- **Minimal API**: Lightweight HTTP endpoints for optimal performance.
-- **Service Design Pattern**: Separation of concerns for maintainable and scalable code.
-- **Code First Approach**: Database schema defined in code for easy updates.
-- **SQL Server**: Reliable and robust database for URL storage.
-- **Carter Nugget Package**: Simplifies Minimal API module structure.
-
-## Application Structure
-
-```
-Shortened URL Application
-│
-├── Modules/         # Minimal API Modules
-│   ├── Shortener/
-|       ├── Endpoints.cs
-│
-│
-├── Services/            # Business logic services
-│   ├── IShortenUrlService.cs
-│   └── ShortenUrlService.cs
-│
-├── Entities/              # Data models
-│   └── ShortenedUrl.cs
-│
-├── Database/            # Database context and migrations
-│   ├── ApplicationDbContext.cs
-│
-├── appsettings.json     # Configuration file including database connection string
-│
-└── Program.cs           # Entry point for the application
-```
+- **Clean Architecture**: A structured and modular application design promoting separation of concerns.
+- **Repository Design Pattern**: Abstracts data access, making it more maintainable and testable.
+- **Minimal API**: Utilizes lightweight endpoints for efficient request handling.
+- **Code First Approach**: Defines the database schema through code, allowing easy migrations and updates.
+- **SQL Server**: Stores URLs in a robust and reliable database.
+- **Carter Nugget Package**: Simplifies the Minimal API module organization.
+- **Mapster for Entity Mapping**: Streamlines data transfer between entities and DTOs.
+- **Fluent Validation**: Validates incoming requests to ensure data integrity.
+- **JWT Authentication**: Secures endpoints with JSON Web Tokens.
+- **Role-Based Authorization**: Controls access based on user roles.
 
 ## Getting Started
 
 ### Prerequisites
 
-Ensure you have the following installed:
+Ensure you have the following tools installed:
 
 - [.NET Core 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
-- [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) or another compatible database provider.
+- [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) or any compatible database provider.
 
 ### Installation
 
@@ -74,11 +63,11 @@ Ensure you have the following installed:
 
 ### Database Setup
 
-2. **Configure database connection**:
+2. **Configure the database connection**:
 
-   - Open `appsettings.json` and modify the `ConnectionStrings` section to point to your SQL Server instance.
+   - Open `appsettings.json` and update the `ConnectionStrings` section with your SQL Server details.
 
-3. **Run database migrations**:
+3. **Apply database migrations**:
 
    ```bash
    dotnet ef migrations add InitialCreate
@@ -95,20 +84,20 @@ Ensure you have the following installed:
 
 5. **Access the API**:
 
-   Navigate to `http://localhost:7017/swagger` for API documentation and interact with the endpoints.
+   Navigate to `http://localhost:7017/swagger` to explore the API documentation and test endpoints.
 
 ## Usage
 
-- Use the API endpoints documented in Swagger to shorten URLs and manage them in the database.
+- Interact with the API using the Swagger documentation to shorten URLs and manage them in the SQL Server database.
 
 ## Contributing
 
-Contributions are welcome! Please fork the repository and submit pull requests to suggest improvements or fix issues.
+We welcome contributions! Feel free to fork the repository and submit pull requests to improve the project or fix issues.
 
 ## Resources
 
-- [Carter GitHub Repository](https://github.com/CarterCommunity/Carter) for more details on Carter and its usage.
+- [Carter GitHub Repository](https://github.com/CarterCommunity/Carter) for detailed information on using the Carter library.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. For more details, see the [LICENSE](LICENSE) file.

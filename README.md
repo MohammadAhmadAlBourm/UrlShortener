@@ -105,9 +105,8 @@ This project is licensed under the MIT License. For more details, see the [LICEN
 ## Support
 If you find this project helpful and want to support its development, consider buying me a coffee:
 
-<!-- Buy Me a Coffee Button -->
-<a href="https://www.buymeacoffee.com/MohammadBourm" target="_blank">
-    <img src="https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png" alt="Buy Me A Coffee" style="height: 51px !important;width: 217px !important;" >
+<a href="https://www.buymeacoffee.com/mohammadbourm" target="_blank">
+  <img 
+    src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" 
+    alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" >
 </a>
-<!-- Buy Me a Coffee Script -->
-<script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="mohammadbourm" data-color="#FFDD00" data-emoji=""  data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>

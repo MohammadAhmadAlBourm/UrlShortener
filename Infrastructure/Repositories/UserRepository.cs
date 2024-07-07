@@ -1,0 +1,103 @@
+﻿using Domain.Entities;
+using Infrastructure.Database;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+
+namespace UrlShortener.Services;
+
+internal sealed class UserRepository(
+    ApplicationDbContext _context,
+    ILogger<UserRepository> _logger) : IUserRepository
+{
+    public async Task<bool> Create(User user, CancellationToken cancellationToken)
+    {
+        try
+        {
+            await _context.Users.AddAsync(user, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An Exception Occurred {Message}", ex.Message);
+            throw;
+        }
+    }
+
+    public async Task<User> GetByEmail(string email, CancellationToken cancellationToken)
+    {
+        try
+        {
+            return await _context.Users
+                .FirstOrDefaultAsync(x => x.Email == email, cancellationToken)
+                ?? throw new Exception("User Not Found");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An Exception Occurred {Message}", ex.Message);
+            throw;
+        }
+    }
+
+    public async Task<User> GetById(Guid id, CancellationToken cancellationToken)
+    {
+        try
+        {
+            return await _context.Users
+                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken)
+                ?? throw new Exception("User Not Found");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An Exception Occurred {Message}", ex.Message);
+            throw;
+        }
+    }
+
+    public async Task<IEnumerable<User>> GetUsers(CancellationToken cancellationToken)
+    {
+        try
+        {
+            return await _context.Users
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An Exception Occurred {Message}", ex.Message);
+            throw;
+        }
+    }
+
+    public async Task<bool> IsExist(string username, CancellationToken cancellationToken)
+    {
+        try
+        {
+            return await _context.Users.AnyAsync(x => x.Username == username, cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An Exception Occurred {Message}", ex.Message);
+            throw;
+        }
+    }
+
+    public async Task<bool> Update(User user, CancellationToken cancellationToken)
+    {
+        try
+        {
+            int count = await _context.Users
+                .Where(x => x.Id == user.Id)
+                .ExecuteUpdateAsync(u => u
+                    .SetProperty(x => x.Name, user.Name)
+                    .SetProperty(x => x.UpdatedDate, DateTime.Now), cancellationToken);
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An Exception Occurred {Message}", ex.Message);
+            throw;
+        }
+    }
+}

@@ -9,11 +9,15 @@ public static class MiddlewareExtension
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
-            app.UseSwaggerUI();
-            app.ApplyMigration();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Url Shortener API V1");
+            });
         }
-
-        app.MapCarter(); // <-- And this
         app.UseHttpsRedirection();
+
+        app.UseAuthentication();
+        app.UseAuthorization();
+        app.MapCarter();
     }
 }

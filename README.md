@@ -15,6 +15,7 @@
 - [Contributing](#contributing)
 - [Resources](#resources)
 - [License](#license)
+- [Support](#support)
 
 ## Overview
 

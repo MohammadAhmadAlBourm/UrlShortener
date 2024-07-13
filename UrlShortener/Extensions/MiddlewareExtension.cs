@@ -19,5 +19,7 @@ public static class MiddlewareExtension
         app.UseAuthentication();
         app.UseAuthorization();
         app.MapCarter();
+
+        app.UseExceptionHandler();
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using UrlShortener.Middleware;
 
 namespace UrlShortener.Extensions;
 
@@ -82,5 +83,9 @@ public static class ServiceExtension
         });
 
         builder.Services.AddAuthorization();
+
+
+        builder.Services.AddExceptionHandler<ExceptionHandlerMiddleware>();
+        builder.Services.AddProblemDetails();
     }
 }

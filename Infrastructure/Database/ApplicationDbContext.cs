@@ -25,15 +25,13 @@ public class ApplicationDbContext : DbContext
         {
             builder.HasIndex(x => x.Email).IsUnique();
             builder.HasIndex(x => x.Username).IsUnique();
-
-
         });
 
         modelBuilder.Entity<User>(builder =>
         {
             builder
             .HasMany(x => x.ShortenedUrls)
-            .WithOne(x => x.User)
+            .WithOne()
             .HasForeignKey(x => x.UserId);
         });
 

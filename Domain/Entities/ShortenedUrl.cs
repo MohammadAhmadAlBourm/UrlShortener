@@ -8,5 +8,4 @@ public class ShortenedUrl
     public string ShortUrl { get; set; } = string.Empty;
     public string Code { get; set; } = string.Empty;
     public DateTime CreatedDate { get; set; }
-    public User User { get; set; } = new();
 }

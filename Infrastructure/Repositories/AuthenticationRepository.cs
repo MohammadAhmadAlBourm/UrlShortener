@@ -39,7 +39,7 @@ internal sealed class AuthenticationRepository(IOptions<JwtOptions> _options) : 
 
         foreach (var role in user.Roles)
         {
-            claims.AddClaim(new Claim(ClaimTypes.Role, role));
+            claims.AddClaim(new Claim(ClaimTypes.Role, role.ToString()));
         }
 
         return claims;

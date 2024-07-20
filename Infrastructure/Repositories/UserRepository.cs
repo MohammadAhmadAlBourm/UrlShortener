@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Domain.Abstractions;
+using Domain.Entities;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -9,7 +10,7 @@ internal sealed class UserRepository(
     ApplicationDbContext _context,
     ILogger<UserRepository> _logger) : IUserRepository
 {
-    public async Task<bool> Create(User user, CancellationToken cancellationToken)
+    public async Task<Result<bool>> Create(User user, CancellationToken cancellationToken)
     {
         try
         {
@@ -24,13 +25,12 @@ internal sealed class UserRepository(
         }
     }
 
-    public async Task<User> GetByEmail(string email, CancellationToken cancellationToken)
+    public async Task<User?> GetByEmail(string email, CancellationToken cancellationToken)
     {
         try
         {
             return await _context.Users
-                .FirstOrDefaultAsync(x => x.Email == email, cancellationToken)
-                ?? throw new Exception("User Not Found");
+                .FirstOrDefaultAsync(x => x.Email == email, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -39,13 +39,12 @@ internal sealed class UserRepository(
         }
     }
 
-    public async Task<User> GetById(Guid id, CancellationToken cancellationToken)
+    public async Task<User?> GetById(Guid id, CancellationToken cancellationToken)
     {
         try
         {
             return await _context.Users
-                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken)
-                ?? throw new Exception("User Not Found");
+                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -82,7 +81,7 @@ internal sealed class UserRepository(
         }
     }
 
-    public async Task<bool> Update(User user, CancellationToken cancellationToken)
+    public async Task<Result<bool>> Update(User user, CancellationToken cancellationToken)
     {
         try
         {

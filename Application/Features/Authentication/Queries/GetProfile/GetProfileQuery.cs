@@ -1,5 +1,5 @@
-﻿using MediatR;
+﻿using Application.Abstractions.Messaging;
 
 namespace Application.Features.Authentication.Queries.GetProfile;
 
-public sealed record GetProfileQuery() : IRequest<GetProfileResponse>;
+public sealed record GetProfileQuery() : IQuery<GetProfileResponse>;

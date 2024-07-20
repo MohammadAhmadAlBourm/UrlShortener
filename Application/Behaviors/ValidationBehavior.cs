@@ -29,7 +29,7 @@ public sealed class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<
             .ToArray();
 
         //if (errors.Any())
-        //    throw new BadRequestException(errors);
+        //    throw new ValidationException(errors);
 
         return await next();
     }

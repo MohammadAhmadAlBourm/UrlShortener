@@ -22,7 +22,7 @@ internal sealed class CreateShorterUrlHandler(
             throw new Exception();
         }
 
-        shortenedUrl.Id = Guid.NewGuid();
+        shortenedUrl.Id = Ulid.NewUlid().ToGuid();
         shortenedUrl.UserId = _userContext.UserId;
         shortenedUrl.Code = ShorterUrlHelper.GenerateUniqueCode();
         shortenedUrl.ShortUrl = $"{_shortenedUrlContext.Scheme}://{_shortenedUrlContext.Host}/api/{shortenedUrl.Code}";

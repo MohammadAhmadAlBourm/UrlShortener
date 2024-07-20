@@ -1,8 +1,9 @@
-﻿using Application.Helper;
+﻿using Application.Abstractions.Messaging;
+using Application.Helper;
+using Domain.Abstractions;
 using Domain.Entities;
 using Domain.Options;
 using MapsterMapper;
-using MediatR;
 using Microsoft.Extensions.Options;
 using UrlShortener.Services;
 
@@ -12,23 +13,32 @@ internal sealed class RegisterHandler(
     IUserRepository _userRepository,
     IMapper _mapper,
     IOptions<PasswordHasherOptions> _options)
-    : IRequestHandler<RegisterCommand, RegisterResponse>
+    : ICommandHandler<RegisterCommand, RegisterResponse>
 {
-    public async Task<RegisterResponse> Handle(RegisterCommand request, CancellationToken cancellationToken)
+    public async Task<Result<RegisterResponse>> Handle(RegisterCommand request, CancellationToken cancellationToken)
     {
         var user = _mapper.Map<User>(request);
 
-        user.Id = Guid.NewGuid();
+        user.Id = Ulid.NewUlid().ToGuid();
         user.Username = user.Email.Split('@')[0];
         user.Salt = PasswordHasher.GenerateSalt();
         user.Password = PasswordHasher.ComputeHash(user.Password, user.Salt, _options.Value.Pepper, _options.Value.Iteration);
         user.Roles =
         [
-            "Customer"
+            Role.Customer
         ];
 
-        await _userRepository.Create(user, cancellationToken);
+        bool isExist = await _userRepository.IsExist(user.Username, cancellationToken);
 
-        return _mapper.Map<RegisterResponse>(user);
+        if (isExist)
+        {
+            return Result.Failure<RegisterResponse>(UserErrors.UserEmailAlreadyExist);
+        }
+
+        var response = await _userRepository.Create(user, cancellationToken);
+
+        return response.IsSuccess
+            ? _mapper.Map<RegisterResponse>(user)
+            : Result.Failure<RegisterResponse>(UserErrors.NotSavedSuccessfully);
     }
 }

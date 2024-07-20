@@ -8,7 +8,7 @@ public class User
     public string Password { get; set; } = string.Empty;
     public string Salt { get; set; } = string.Empty;
     public string Username { get; set; } = string.Empty;
-    public List<string> Roles { get; set; } = [];
+    public List<Role> Roles { get; set; } = [];
     public DateTime CreatedDate { get; set; } = DateTime.Now;
     public DateTime UpdatedDate { get; set; }
 

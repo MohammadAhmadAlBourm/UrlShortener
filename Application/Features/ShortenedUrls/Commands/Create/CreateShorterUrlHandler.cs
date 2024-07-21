@@ -3,15 +3,12 @@ using Domain.Entities;
 using Domain.Repositories;
 using MapsterMapper;
 using MediatR;
-using UrlShortener.Services;
 
 namespace Application.Features.ShortenedUrls.Commands.Create;
 
 internal sealed class CreateShorterUrlHandler(
-    IShortenedUrlRepository _shortenedUrlRepository,
-    IMapper _mapper,
-    IShortenedUrlContext _shortenedUrlContext,
-    IUserContext _userContext) : IRequestHandler<CreateShorterUrlCommand, CreateShorterUrlResponse>
+    IUnitOfWork _unitOfWork,
+    IMapper _mapper) : IRequestHandler<CreateShorterUrlCommand, CreateShorterUrlResponse>
 {
     public async Task<CreateShorterUrlResponse> Handle(CreateShorterUrlCommand request, CancellationToken cancellationToken)
     {
@@ -23,11 +20,12 @@ internal sealed class CreateShorterUrlHandler(
         }
 
         shortenedUrl.Id = Ulid.NewUlid().ToGuid();
-        shortenedUrl.UserId = _userContext.UserId;
+        shortenedUrl.UserId = _unitOfWork.UserContext.UserId;
         shortenedUrl.Code = ShorterUrlHelper.GenerateUniqueCode();
-        shortenedUrl.ShortUrl = $"{_shortenedUrlContext.Scheme}://{_shortenedUrlContext.Host}/api/{shortenedUrl.Code}";
+        shortenedUrl.ShortUrl = $"{_unitOfWork.ShortenedUrlContext.Scheme}://{_unitOfWork.ShortenedUrlContext.Host}/api/{shortenedUrl.Code}";
 
-        await _shortenedUrlRepository.Create(shortenedUrl, cancellationToken);
+        await _unitOfWork.ShortenedUrlRepository.Create(shortenedUrl, cancellationToken);
+        await _unitOfWork.CompleteAsync(cancellationToken);
 
         return _mapper.Map<CreateShorterUrlResponse>(shortenedUrl);
     }

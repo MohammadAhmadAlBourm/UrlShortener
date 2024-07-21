@@ -1,6 +1,6 @@
-﻿using MapsterMapper;
+﻿using Domain.Repositories;
+using MapsterMapper;
 using MediatR;
-using UrlShortener.Services;
 
 namespace Application.Features.ShortenedUrls.Queries.GetByCode;
 

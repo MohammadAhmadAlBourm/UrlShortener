@@ -1,5 +1,6 @@
 ﻿using Domain.Abstractions;
 using Domain.Entities;
+using Domain.Repositories;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -15,7 +16,6 @@ internal sealed class UserRepository(
         try
         {
             await _context.Users.AddAsync(user, cancellationToken);
-            await _context.SaveChangesAsync(cancellationToken);
             return true;
         }
         catch (Exception ex)

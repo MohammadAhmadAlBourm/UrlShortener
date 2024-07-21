@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="EventsHandler\" />
     <Folder Include="Features\Users\Commands\Create\" />
     <Folder Include="Features\Users\Commands\Delete\" />
     <Folder Include="Features\Users\Commands\Update\" />

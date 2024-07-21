@@ -3,17 +3,16 @@ using Application.Helper;
 using Domain.Abstractions;
 using Domain.Entities;
 using Domain.Options;
+using Domain.Repositories;
 using MapsterMapper;
 using Microsoft.Extensions.Options;
-using UrlShortener.Services;
 
 namespace Application.Features.Authentication.Commands.Register;
 
 internal sealed class RegisterHandler(
-    IUserRepository _userRepository,
+    IUnitOfWork _unitOfWork,
     IMapper _mapper,
-    IOptions<PasswordHasherOptions> _options)
-    : ICommandHandler<RegisterCommand, RegisterResponse>
+    IOptions<PasswordHasherOptions> _options) : ICommandHandler<RegisterCommand, RegisterResponse>
 {
     public async Task<Result<RegisterResponse>> Handle(RegisterCommand request, CancellationToken cancellationToken)
     {
@@ -28,17 +27,15 @@ internal sealed class RegisterHandler(
             Role.Customer
         ];
 
-        bool isExist = await _userRepository.IsExist(user.Username, cancellationToken);
+        bool isExist = await _unitOfWork.UserRepository.IsExist(user.Username, cancellationToken);
 
         if (isExist)
         {
             return Result.Failure<RegisterResponse>(UserErrors.UserEmailAlreadyExist);
         }
 
-        var response = await _userRepository.Create(user, cancellationToken);
-
-        return response.IsSuccess
-            ? _mapper.Map<RegisterResponse>(user)
-            : Result.Failure<RegisterResponse>(UserErrors.NotSavedSuccessfully);
+        await _unitOfWork.UserRepository.Create(user, cancellationToken);
+        await _unitOfWork.CompleteAsync(cancellationToken);
+        return _mapper.Map<RegisterResponse>(user);
     }
 }

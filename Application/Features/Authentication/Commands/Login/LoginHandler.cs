@@ -3,20 +3,18 @@ using Application.Helper;
 using Domain.Abstractions;
 using Domain.Entities;
 using Domain.Options;
+using Domain.Repositories;
 using Microsoft.Extensions.Options;
-using UrlShortener.Services;
 
 namespace Application.Features.Authentication.Commands.Login;
 
 internal sealed class LoginHandler(
-    IUserRepository _userRepository,
-    IAuthenticationRepository _authenticationRepository,
-    IOptions<PasswordHasherOptions> _options)
-    : ICommandHandler<LoginCommand, LoginResponse>
+    IUnitOfWork _unitOfWork,
+    IOptions<PasswordHasherOptions> _options) : ICommandHandler<LoginCommand, LoginResponse>
 {
     public async Task<Result<LoginResponse>> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        var user = await _userRepository.GetByEmail(request.Email, cancellationToken);
+        var user = await _unitOfWork.UserRepository.GetByEmail(request.Email, cancellationToken);
 
         if (user is null)
         {
@@ -30,7 +28,7 @@ internal sealed class LoginHandler(
             return Result.Failure<LoginResponse>(UserErrors.UserPasswordNotMatching);
         }
 
-        var token = _authenticationRepository.GenerateToken(user);
+        var token = _unitOfWork.AuthenticationRepository.GenerateToken(user);
 
 
         return new LoginResponse

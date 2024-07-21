@@ -1,7 +1,7 @@
 ﻿using Domain.Abstractions;
 using Domain.Entities;
 
-namespace UrlShortener.Services;
+namespace Domain.Repositories;
 
 public interface IUserRepository
 {

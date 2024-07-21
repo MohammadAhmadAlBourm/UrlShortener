@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Repositories;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -17,7 +18,6 @@ internal sealed class ShortenedUrlRepository(
             shortenedUrl.CreatedDate = DateTime.Now;
 
             await _context.ShortenedUrls.AddAsync(shortenedUrl, cancellationToken);
-            await _context.SaveChangesAsync(cancellationToken);
             return true;
         }
         catch (Exception ex)

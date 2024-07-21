@@ -1,6 +1,6 @@
 ﻿using Domain.Entities;
 
-namespace UrlShortener.Services;
+namespace Domain.Repositories;
 
 public interface IAuthenticationRepository
 {

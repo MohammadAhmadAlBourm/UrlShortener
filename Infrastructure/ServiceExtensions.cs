@@ -1,6 +1,7 @@
 ﻿using Domain.Email;
 using Domain.Options;
 using Domain.Repositories;
+using Infrastructure.BackgroundJobs;
 using Infrastructure.Database;
 using Infrastructure.Emails;
 using Infrastructure.Options;
@@ -51,5 +52,8 @@ public static class ServiceExtensions
 
 
         services.AddHttpContextAccessor();
+
+        services.AddHostedService<DeleteUnnecessaryUrlsBackgroundJob>();
+
     }
 }

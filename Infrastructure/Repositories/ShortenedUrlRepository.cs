@@ -27,6 +27,29 @@ internal sealed class ShortenedUrlRepository(
         }
     }
 
+    public async Task DeleteUnnecessaryUrls(CancellationToken cancellationToken)
+    {
+        try
+        {
+            // Define the cutoff date as one year ago from now
+            var cutOffDate = DateTime.Now.AddYears(-1);
+
+            var urlsToDelete = await _context.ShortenedUrls
+                .Where(url => url.CreatedDate < cutOffDate)
+                .ToListAsync(cancellationToken);
+
+            if (urlsToDelete.Count != 0)
+            {
+                _context.ShortenedUrls.RemoveRange(urlsToDelete);
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An Exception Occurred {Message}", ex.Message);
+            throw;
+        }
+    }
+
     public async Task<ShortenedUrl> GetByCode(string code, CancellationToken cancellationToken)
     {
         try

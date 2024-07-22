@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Users\Commands\Update\" />
     <Folder Include="Features\Users\Queries\GetById\" />
     <Folder Include="Features\Users\Queries\GetUsers\" />
   </ItemGroup>

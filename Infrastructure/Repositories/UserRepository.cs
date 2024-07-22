@@ -106,6 +106,7 @@ internal sealed class UserRepository(
                 .Where(x => x.Id == user.Id)
                 .ExecuteUpdateAsync(u => u
                     .SetProperty(x => x.Name, user.Name)
+                    .SetProperty(x => x.Roles, user.Roles)
                     .SetProperty(x => x.UpdatedDate, DateTime.Now), cancellationToken);
 
             return true;

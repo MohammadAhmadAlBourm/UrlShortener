@@ -3,7 +3,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace Infrastructure.BackgroundJobs;
 
-internal class DeleteUnnecessaryUrlsBackgroundJob(IUnitOfWork _unitOfWork) : BackgroundService
+internal sealed class DeleteUnnecessaryUrlsBackgroundJob(IUnitOfWork _unitOfWork) : BackgroundService
 {
     private readonly TimeSpan _period = TimeSpan.FromDays(7);
 
@@ -15,7 +15,6 @@ internal class DeleteUnnecessaryUrlsBackgroundJob(IUnitOfWork _unitOfWork) : Bac
                await timer.WaitForNextTickAsync(stoppingToken))
         {
             await _unitOfWork.ShortenedUrlRepository.DeleteUnnecessaryUrls(stoppingToken);
-            await _unitOfWork.CompleteAsync(stoppingToken);
         }
     }
 }

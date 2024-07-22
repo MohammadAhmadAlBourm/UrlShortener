@@ -25,6 +25,23 @@ internal sealed class UserRepository(
         }
     }
 
+    public async Task<Result<bool>> Delete(Guid id, CancellationToken cancellationToken)
+    {
+        try
+        {
+            int count = await _context.Users
+                .Where(x => x.Id == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            return count > 0;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An Exception Occurred {Message}", ex.Message);
+            throw;
+        }
+    }
+
     public async Task<User?> GetByEmail(string email, CancellationToken cancellationToken)
     {
         try

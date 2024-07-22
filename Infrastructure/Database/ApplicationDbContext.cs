@@ -19,6 +19,7 @@ public class ApplicationDbContext : DbContext
         {
             builder.Property(x => x.Code).HasMaxLength(7);
             builder.HasIndex(x => x.Code).IsUnique();
+            builder.HasIndex(x => x.CreatedDate);
         });
 
         modelBuilder.Entity<User>(builder =>

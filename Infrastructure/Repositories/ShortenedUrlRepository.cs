@@ -31,17 +31,9 @@ internal sealed class ShortenedUrlRepository(
     {
         try
         {
-            // Define the cutoff date as one year ago from now
-            var cutOffDate = DateTime.Now.AddYears(-1);
-
-            var urlsToDelete = await _context.ShortenedUrls
-                .Where(url => url.CreatedDate < cutOffDate)
-                .ToListAsync(cancellationToken);
-
-            if (urlsToDelete.Count != 0)
-            {
-                _context.ShortenedUrls.RemoveRange(urlsToDelete);
-            }
+            await _context.ShortenedUrls
+               .Where(url => url.CreatedDate < DateTime.Now.AddYears(-1))
+               .ExecuteDeleteAsync(cancellationToken);
         }
         catch (Exception ex)
         {

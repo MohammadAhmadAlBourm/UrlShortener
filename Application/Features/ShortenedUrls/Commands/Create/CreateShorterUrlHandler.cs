@@ -1,22 +1,23 @@
-﻿using Application.Common;
+﻿using Application.Abstractions;
+using Application.Common;
+using Domain.Abstractions;
 using Domain.Entities;
 using Domain.Repositories;
 using MapsterMapper;
-using MediatR;
 
 namespace Application.Features.ShortenedUrls.Commands.Create;
 
 internal sealed class CreateShorterUrlHandler(
     IUnitOfWork _unitOfWork,
-    IMapper _mapper) : IRequestHandler<CreateShorterUrlCommand, CreateShorterUrlResponse>
+    IMapper _mapper) : ICommandHandler<CreateShorterUrlCommand, CreateShorterUrlResponse>
 {
-    public async Task<CreateShorterUrlResponse> Handle(CreateShorterUrlCommand request, CancellationToken cancellationToken)
+    public async Task<Result<CreateShorterUrlResponse>> Handle(CreateShorterUrlCommand request, CancellationToken cancellationToken)
     {
         var shortenedUrl = _mapper.Map<ShortenedUrl>(request);
 
         if (!Uri.TryCreate(request.LongUrl, UriKind.Absolute, out _))
         {
-            throw new Exception();
+            return Result.Failure<CreateShorterUrlResponse>(ShortenedUrlErrors.CreatedShortenedUrlWasFailed);
         }
 
         shortenedUrl.Id = Ulid.NewUlid().ToGuid();

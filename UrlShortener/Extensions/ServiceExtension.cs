@@ -50,7 +50,7 @@ public static class ServiceExtension
 
 
         builder.Services.ConfigureApplication();
-        builder.Services.ConfigureInfrastructure(builder.Configuration);
+        builder.Services.ConfigureInfrastructure();
 
         builder.Services.AddOptions<JwtOptions>()
             .BindConfiguration(nameof(JwtOptions))

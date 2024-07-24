@@ -1,7 +1,7 @@
 ﻿using Domain.Entities;
 using Mapster;
 
-namespace Application.Features.ShortenedUrls.Queries.GetByCode;
+namespace Application.Features.ShortenedUrls.Queries.GetShortenedUrls;
 
 internal sealed class GetShortenedUrlsMapper
 {

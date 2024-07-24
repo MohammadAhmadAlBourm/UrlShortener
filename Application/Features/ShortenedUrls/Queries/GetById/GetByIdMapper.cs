@@ -1,12 +1,12 @@
 ﻿using Domain.Entities;
 using Mapster;
 
-namespace Application.Features.ShortenedUrls.Queries.GetByCode;
+namespace Application.Features.ShortenedUrls.Queries.GetById;
 
 internal sealed class GetByIdMapper
 {
     public static void Configure()
     {
-        TypeAdapterConfig<ShortenedUrl, GetByIdResponse>.NewConfig();
+        TypeAdapterConfig<ShortenedUrl, GetUrlByIdResponse>.NewConfig();
     }
 }

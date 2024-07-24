@@ -1,15 +1,24 @@
-﻿using Domain.Repositories;
+﻿using Application.Abstractions;
+using Domain.Abstractions;
+using Domain.Entities;
+using Domain.Repositories;
 using MapsterMapper;
-using MediatR;
 
-namespace Application.Features.ShortenedUrls.Queries.GetByCode;
+namespace Application.Features.ShortenedUrls.Queries.GetById;
 
 internal sealed class GetByIdHandler(
-    IShortenedUrlRepository _shortenedUrlRepository,
-    IMapper _mapper) : IRequestHandler<GetByIdQuery, GetByIdResponse>
+    IUnitOfWork _unitOfWork,
+    IMapper _mapper) : IQueryHandler<GetByIdQuery, GetUrlByIdResponse>
 {
-    public async Task<GetByIdResponse> Handle(GetByIdQuery request, CancellationToken cancellationToken)
+    public async Task<Result<GetUrlByIdResponse>> Handle(GetByIdQuery request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var url = await _unitOfWork.ShortenedUrlRepository.GetById(request.Id, cancellationToken);
+
+        if (url is null)
+        {
+            return Result.Failure<GetUrlByIdResponse>(ShortenedUrlErrors.ShortenedUrlIdNotFound);
+        }
+
+        return _mapper.Map<GetUrlByIdResponse>(url);
     }
 }

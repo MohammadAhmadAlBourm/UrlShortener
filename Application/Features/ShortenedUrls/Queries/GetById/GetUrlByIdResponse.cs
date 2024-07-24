@@ -1,6 +1,6 @@
-﻿namespace Application.Features.ShortenedUrls.Queries.GetByCode;
+﻿namespace Application.Features.ShortenedUrls.Queries.GetById;
 
-public sealed class GetByIdResponse
+public sealed class GetUrlByIdResponse
 {
     public Guid Id { get; set; }
     public string LongUrl { get; set; } = string.Empty;

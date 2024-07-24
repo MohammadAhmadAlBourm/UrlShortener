@@ -27,6 +27,23 @@ internal sealed class ShortenedUrlRepository(
         }
     }
 
+    public async Task<bool> Delete(Guid id, CancellationToken cancellationToken)
+    {
+        try
+        {
+            await _context.ShortenedUrls
+                .Where(x => x.Id == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An Exception Occurred {Message}", ex.Message);
+            throw;
+        }
+    }
+
     public async Task DeleteUnnecessaryUrls(CancellationToken cancellationToken)
     {
         try
@@ -42,12 +59,56 @@ internal sealed class ShortenedUrlRepository(
         }
     }
 
-    public async Task<ShortenedUrl> GetByCode(string code, CancellationToken cancellationToken)
+    public async Task<ShortenedUrl?> GetByCode(string code, CancellationToken cancellationToken)
     {
         try
         {
-            return await _context.ShortenedUrls.FirstOrDefaultAsync(x => x.Code == code, cancellationToken)
-                ?? throw new Exception("Was not found");
+            return await _context.ShortenedUrls
+                .FirstOrDefaultAsync(x => x.Code == code, cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An Exception Occurred {Message}", ex.Message);
+            throw;
+        }
+    }
+    public async Task<ShortenedUrl?> GetById(Guid id, CancellationToken cancellationToken)
+    {
+        try
+        {
+            return await _context.ShortenedUrls
+                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An Exception Occurred {Message}", ex.Message);
+            throw;
+        }
+    }
+
+    public async Task<IEnumerable<ShortenedUrl>> GetByUserId(Guid userId, CancellationToken cancellationToken)
+    {
+        try
+        {
+            return await _context.ShortenedUrls
+                 .Where(x => x.UserId == userId)
+                 .AsNoTracking()
+                 .ToListAsync(cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An Exception Occurred {Message}", ex.Message);
+            throw;
+        }
+    }
+
+    public async Task<IEnumerable<ShortenedUrl>> GetShortenedUrls(CancellationToken cancellationToken)
+    {
+        try
+        {
+            return await _context.ShortenedUrls
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
         }
         catch (Exception ex)
         {

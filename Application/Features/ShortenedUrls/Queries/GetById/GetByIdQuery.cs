@@ -1,5 +1,5 @@
-﻿using MediatR;
+﻿using Application.Abstractions;
 
-namespace Application.Features.ShortenedUrls.Queries.GetByCode;
+namespace Application.Features.ShortenedUrls.Queries.GetById;
 
-public sealed record GetByIdQuery(Guid Id) : IRequest<GetByIdResponse>;
+public sealed record GetByIdQuery(Guid Id) : IQuery<GetUrlByIdResponse>;

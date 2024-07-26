@@ -1,11 +1,9 @@
 ﻿namespace Domain.Entities;
 
-public class ShortenedUrl
+public class ShortenedUrl : Entity
 {
-    public Guid Id { get; set; }
     public Guid UserId { get; set; }
     public string LongUrl { get; set; } = string.Empty;
     public string ShortUrl { get; set; } = string.Empty;
     public string Code { get; set; } = string.Empty;
-    public DateTime CreatedDate { get; set; }
 }

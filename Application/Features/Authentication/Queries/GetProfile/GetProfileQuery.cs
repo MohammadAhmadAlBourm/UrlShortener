@@ -1,4 +1,4 @@
-﻿using Application.Abstractions;
+﻿using Application.Abstractions.Messaging;
 
 namespace Application.Features.Authentication.Queries.GetProfile;
 

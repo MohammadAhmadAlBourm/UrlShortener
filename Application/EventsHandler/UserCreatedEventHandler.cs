@@ -1,4 +1,4 @@
-﻿using Domain.Email;
+﻿using Domain.Abstractions;
 using Domain.Events;
 using Domain.Models;
 using MediatR;

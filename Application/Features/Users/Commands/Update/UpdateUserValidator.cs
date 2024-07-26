@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+﻿using Domain.Enums;
 using FluentValidation;
 
 namespace Application.Features.Users.Commands.Update;

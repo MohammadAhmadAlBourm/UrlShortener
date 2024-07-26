@@ -1,6 +1,6 @@
 ﻿using Domain.Models;
 
-namespace Domain.Email;
+namespace Domain.Abstractions;
 
 public interface IEmailService
 {

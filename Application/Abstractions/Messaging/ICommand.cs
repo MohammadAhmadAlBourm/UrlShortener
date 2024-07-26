@@ -1,7 +1,7 @@
 ﻿using Domain.Abstractions;
 using MediatR;
 
-namespace Application.Abstractions;
+namespace Application.Abstractions.Messaging;
 
 public interface ICommand : IRequest<Result>, IBaseCommand
 {

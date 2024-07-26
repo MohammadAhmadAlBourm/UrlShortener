@@ -1,5 +1,5 @@
-﻿using Application.Abstractions;
-using Domain.Entities;
+﻿using Application.Abstractions.Messaging;
+using Domain.Enums;
 
 namespace Application.Features.Users.Commands.Create;
 

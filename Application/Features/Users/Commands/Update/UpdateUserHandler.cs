@@ -1,4 +1,4 @@
-﻿using Application.Abstractions;
+﻿using Application.Abstractions.Messaging;
 using Domain.Abstractions;
 using Domain.Entities;
 using Domain.Repositories;

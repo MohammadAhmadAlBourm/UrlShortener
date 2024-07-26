@@ -1,4 +1,4 @@
-﻿using Domain.Email;
+﻿using Domain.Abstractions;
 using Domain.Models;
 using FluentEmail.Core;
 using FluentEmail.Razor;

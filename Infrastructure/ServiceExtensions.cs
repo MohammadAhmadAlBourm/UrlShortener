@@ -1,4 +1,4 @@
-﻿using Domain.Email;
+﻿using Domain.Abstractions;
 using Domain.Options;
 using Domain.Repositories;
 using Infrastructure.BackgroundJobs;

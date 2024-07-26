@@ -14,6 +14,7 @@ public static class ServiceExtension
 {
     public static void ConfigureServices(this WebApplicationBuilder builder)
     {
+        builder.Services.ConfigureApiVersioning();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen(c =>
         {

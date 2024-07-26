@@ -4,6 +4,8 @@ using Application.Features.ShortenedUrls.Queries.GetByCode;
 using Application.Features.ShortenedUrls.Queries.GetById;
 using Application.Features.ShortenedUrls.Queries.GetMyUrls;
 using Application.Features.ShortenedUrls.Queries.GetShortenedUrls;
+using Asp.Versioning;
+using Asp.Versioning.Builder;
 using Carter;
 using MediatR;
 using UrlShortener.Extensions;
@@ -14,43 +16,67 @@ public class Endpoints : CarterModule
 {
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
+        ApiVersionSet apiVersionSet = app.NewApiVersionSet()
+           .HasApiVersion(new ApiVersion(1))
+           .HasApiVersion(new ApiVersion(2))
+           .ReportApiVersions()
+           .Build();
+
         app.MapPost("api/shorten", async (CreateShorterUrlCommand request, ISender sender, CancellationToken cancellationToken) =>
         {
             var response = await sender.Send(request, cancellationToken);
             return response.IsSuccess ? Results.Ok(response.Value) : response.ToProblemDetails();
 
-        }).RequireAuthorization();
+        })
+        .WithApiVersionSet(apiVersionSet)
+        .MapToApiVersion(1)
+        .RequireAuthorization();
 
-        app.MapDelete("api/shorten/{id}", async (Guid id, ISender sender, CancellationToken cancellationToken) =>
+        app.MapDelete("api/v{version:apiVersion}/shorten/{id}", async (Guid id, ISender sender, CancellationToken cancellationToken) =>
         {
             var response = await sender.Send(new DeleteShorterUrlCommand(id), cancellationToken);
             return response.IsSuccess ? Results.Ok(response.Value) : response.ToProblemDetails();
 
-        }).RequireAuthorization();
+        })
+        .WithApiVersionSet(apiVersionSet)
+        .MapToApiVersion(1)
+        .RequireAuthorization();
 
-        app.MapGet("api/shorten/code/{code}", async (string code, ISender sender, CancellationToken cancellationToken) =>
+        app.MapGet("api/v{version:apiVersion}/shorten/code/{code}", async (string code, ISender sender, CancellationToken cancellationToken) =>
         {
             var response = await sender.Send(new GetByCodeQuery(code), cancellationToken);
             return response.IsSuccess ? Results.Redirect(response.Value.LongUrl) : response.ToProblemDetails();
-        });
+        })
+        .WithApiVersionSet(apiVersionSet)
+        .MapToApiVersion(1);
 
-        app.MapGet("api/shorten/{id}", async (Guid id, ISender sender, CancellationToken cancellationToken) =>
+        app.MapGet("api/v{version:apiVersion}/shorten/{id}", async (Guid id, ISender sender, CancellationToken cancellationToken) =>
         {
             var response = await sender.Send(new GetByIdQuery(id), cancellationToken);
             return response.IsSuccess ? Results.Ok(response.Value) : response.ToProblemDetails();
-        }).RequireAuthorization();
+        })
+        .WithApiVersionSet(apiVersionSet)
+        .MapToApiVersion(1)
+        .RequireAuthorization();
 
-        app.MapGet("api/shorten/my-url", async (ISender sender, CancellationToken cancellationToken) =>
+        app.MapGet("api/v{version:apiVersion}/shorten/my-url", async (ISender sender, CancellationToken cancellationToken) =>
         {
             var response = await sender.Send(new GetMyUrlsQuery(), cancellationToken);
             return Results.Ok(response);
-        }).RequireAuthorization();
+        })
+        .WithApiVersionSet(apiVersionSet)
+        .MapToApiVersion(1)
+        .RequireAuthorization();
 
-        app.MapGet("api/shorten", async (ISender sender, CancellationToken cancellationToken) =>
+        app.MapGet("api/v{version:apiVersion}/shorten", async (ISender sender, CancellationToken cancellationToken) =>
         {
             var response = await sender.Send(new GetShortenedUrlsQuery(), cancellationToken);
             return Results.Ok(response);
-        }).RequireAuthorization();
+        })
+        .WithApiVersionSet(apiVersionSet)
+        .MapToApiVersion(1)
+        .RequireAuthorization();
+
 
     }
 }

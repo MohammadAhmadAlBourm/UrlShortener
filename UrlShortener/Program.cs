@@ -1,4 +1,4 @@
-using UrlShortener.Extensions;
+using API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

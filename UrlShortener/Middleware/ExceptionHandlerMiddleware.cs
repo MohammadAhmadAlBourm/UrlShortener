@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
-namespace UrlShortener.Middleware;
+namespace API.Middleware;
 
 internal sealed class ExceptionHandlerMiddleware : IExceptionHandler
 {

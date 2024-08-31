@@ -1,4 +1,5 @@
-﻿using Application;
+﻿using API.Middleware;
+using Application;
 using Carter;
 using Domain.Options;
 using Infrastructure;
@@ -6,9 +7,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using UrlShortener.Middleware;
 
-namespace UrlShortener.Extensions;
+namespace API.Extensions;
 
 public static class ServiceExtension
 {

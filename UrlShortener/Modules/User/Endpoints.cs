@@ -1,4 +1,5 @@
-﻿using Application.Users.Commands.Create;
+﻿using API.Extensions;
+using Application.Users.Commands.Create;
 using Application.Users.Commands.Delete;
 using Application.Users.Commands.Update;
 using Application.Users.Queries.GetById;
@@ -7,9 +8,8 @@ using Asp.Versioning;
 using Asp.Versioning.Builder;
 using Carter;
 using MediatR;
-using UrlShortener.Extensions;
 
-namespace UrlShortener.Modules.User;
+namespace API.Modules.User;
 
 public class Endpoints : ICarterModule
 {

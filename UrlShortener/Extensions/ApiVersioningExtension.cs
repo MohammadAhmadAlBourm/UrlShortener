@@ -1,6 +1,6 @@
 ﻿using Asp.Versioning;
 
-namespace UrlShortener.Extensions;
+namespace API.Extensions;
 
 public static class ApiVersioningExtension
 {

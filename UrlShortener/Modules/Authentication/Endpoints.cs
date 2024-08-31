@@ -1,4 +1,5 @@
-﻿using Application.Users.Commands.Login;
+﻿using API.Extensions;
+using Application.Users.Commands.Login;
 using Application.Users.Commands.Register;
 using Application.Users.Queries.GetProfile;
 using Asp.Versioning;
@@ -6,9 +7,8 @@ using Asp.Versioning.Builder;
 using Carter;
 using Domain.Abstractions;
 using MediatR;
-using UrlShortener.Extensions;
 
-namespace UrlShortener.Modules.Authentication;
+namespace API.Modules.Authentication;
 
 public class Endpoints : CarterModule
 {

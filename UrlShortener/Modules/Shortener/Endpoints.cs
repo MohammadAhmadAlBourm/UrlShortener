@@ -1,4 +1,5 @@
-﻿using Application.ShortenedUrls.Commands.Create;
+﻿using API.Extensions;
+using Application.ShortenedUrls.Commands.Create;
 using Application.ShortenedUrls.Commands.Delete;
 using Application.ShortenedUrls.Queries.GetByCode;
 using Application.ShortenedUrls.Queries.GetById;
@@ -8,9 +9,8 @@ using Asp.Versioning;
 using Asp.Versioning.Builder;
 using Carter;
 using MediatR;
-using UrlShortener.Extensions;
 
-namespace UrlShortener.Modules.Shortener;
+namespace API.Modules.Shortener;
 
 public class Endpoints : CarterModule
 {

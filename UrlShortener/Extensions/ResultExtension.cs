@@ -1,6 +1,6 @@
 ﻿using Domain.Abstractions;
 
-namespace UrlShortener.Extensions;
+namespace API.Extensions;
 
 public static class ResultExtension
 {

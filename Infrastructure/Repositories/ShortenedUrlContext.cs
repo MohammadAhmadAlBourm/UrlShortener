@@ -5,12 +5,14 @@ namespace Infrastructure.Repositories;
 
 internal sealed class ShortenedUrlContext(IHttpContextAccessor httpContextAccessor) : IShortenedUrlContext
 {
-    public string Scheme => httpContextAccessor
+    private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
+
+    public string Scheme => _httpContextAccessor
         .HttpContext
         .Request
         .Scheme;
 
-    public string Host => httpContextAccessor
+    public string Host => _httpContextAccessor
         .HttpContext
         .Request
         .Host

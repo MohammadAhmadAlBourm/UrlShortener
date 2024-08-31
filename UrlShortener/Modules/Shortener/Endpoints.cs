@@ -1,9 +1,9 @@
-﻿using Application.Features.ShortenedUrls.Commands.Create;
-using Application.Features.ShortenedUrls.Commands.Delete;
-using Application.Features.ShortenedUrls.Queries.GetByCode;
-using Application.Features.ShortenedUrls.Queries.GetById;
-using Application.Features.ShortenedUrls.Queries.GetMyUrls;
-using Application.Features.ShortenedUrls.Queries.GetShortenedUrls;
+﻿using Application.ShortenedUrls.Commands.Create;
+using Application.ShortenedUrls.Commands.Delete;
+using Application.ShortenedUrls.Queries.GetByCode;
+using Application.ShortenedUrls.Queries.GetById;
+using Application.ShortenedUrls.Queries.GetMyUrls;
+using Application.ShortenedUrls.Queries.GetShortenedUrls;
 using Asp.Versioning;
 using Asp.Versioning.Builder;
 using Carter;

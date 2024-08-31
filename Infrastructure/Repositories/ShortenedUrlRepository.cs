@@ -4,13 +4,13 @@ using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace UrlShortener.Services;
+namespace Infrastructure.Repositories;
 
-internal sealed class ShortenedUrlRepository(
-    ApplicationDbContext _context,
-    ILogger<ShortenedUrlRepository> _logger
-    ) : IShortenedUrlRepository
+internal sealed class ShortenedUrlRepository(ApplicationDbContext context, ILogger<ShortenedUrlRepository> logger) : IShortenedUrlRepository
 {
+    private readonly ApplicationDbContext _context = context;
+    private readonly ILogger<ShortenedUrlRepository> _logger = logger;
+
     public async Task<bool> Create(ShortenedUrl shortenedUrl, CancellationToken cancellationToken)
     {
         try

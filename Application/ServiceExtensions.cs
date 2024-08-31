@@ -1,7 +1,6 @@
-﻿using Application.Behaviors;
+﻿using Application.Abstractions.Behaviors;
 using FluentValidation;
 using Mapster;
-using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -14,8 +13,15 @@ public static class ServiceExtensions
         services.AddMapster();
         TypeAdapterConfig.GlobalSettings.Scan(Assembly.GetExecutingAssembly());
 
-        services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(typeof(ServiceExtensions).Assembly));
-        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+        services.AddMediatR(config =>
+        {
+            config.RegisterServicesFromAssembly(typeof(ServiceExtensions).Assembly);
+
+            config.AddOpenBehavior(typeof(RequestLoggingPipelineBehavior<,>));
+            config.AddOpenBehavior(typeof(ValidationPipelineBehavior<,>));
+        });
+
+        services.AddValidatorsFromAssembly(typeof(ServiceExtensions).Assembly, includeInternalTypes: true);
+
     }
 }

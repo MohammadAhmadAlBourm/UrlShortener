@@ -1,6 +1,6 @@
-﻿using Application.Features.Authentication.Commands.Login;
-using Application.Features.Authentication.Commands.Register;
-using Application.Features.Authentication.Queries.GetProfile;
+﻿using Application.Users.Commands.Login;
+using Application.Users.Commands.Register;
+using Application.Users.Queries.GetProfile;
 using Asp.Versioning;
 using Asp.Versioning.Builder;
 using Carter;

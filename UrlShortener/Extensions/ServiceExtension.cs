@@ -77,7 +77,7 @@ public static class ServiceExtension
             x.SaveToken = true;
             x.TokenValidationParameters = new TokenValidationParameters
             {
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtOptions.SecretKey)),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtOptions.Secret)),
                 ValidateIssuer = false,
                 ValidateAudience = false
             };

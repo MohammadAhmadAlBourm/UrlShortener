@@ -1,17 +1,18 @@
-﻿using Domain.Abstractions;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Repositories;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace UrlShortener.Services;
+namespace Infrastructure.Repositories;
 
-internal sealed class UserRepository(
-    ApplicationDbContext _context,
-    ILogger<UserRepository> _logger) : IUserRepository
+internal sealed class UserRepository(ApplicationDbContext context, ILogger<UserRepository> logger) : IUserRepository
 {
-    public async Task<Result<bool>> Create(User user, CancellationToken cancellationToken)
+
+    private readonly ApplicationDbContext _context = context;
+    private readonly ILogger<UserRepository> _logger = logger;
+
+    public async Task<bool> Create(User user, CancellationToken cancellationToken)
     {
         try
         {
@@ -25,7 +26,7 @@ internal sealed class UserRepository(
         }
     }
 
-    public async Task<Result<bool>> Delete(Guid id, CancellationToken cancellationToken)
+    public async Task<bool> Delete(Guid id, CancellationToken cancellationToken)
     {
         try
         {
@@ -98,14 +99,16 @@ internal sealed class UserRepository(
         }
     }
 
-    public async Task<Result<bool>> Update(User user, CancellationToken cancellationToken)
+    public async Task<bool> Update(User user, CancellationToken cancellationToken)
     {
         try
         {
             int count = await _context.Users
                 .Where(x => x.Id == user.Id)
                 .ExecuteUpdateAsync(u => u
-                    .SetProperty(x => x.Name, user.Name)
+                    .SetProperty(x => x.FirstName, user.FirstName)
+                    .SetProperty(x => x.LastName, user.LastName)
+                    .SetProperty(x => x.MiddleName, user.MiddleName)
                     .SetProperty(x => x.Roles, user.Roles)
                     .SetProperty(x => x.UpdatedDate, DateTime.Now), cancellationToken);
 

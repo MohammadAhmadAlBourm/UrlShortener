@@ -1,8 +1,8 @@
-﻿using Application.Features.Users.Commands.Create;
-using Application.Features.Users.Commands.Delete;
-using Application.Features.Users.Commands.Update;
-using Application.Features.Users.Queries.GetById;
-using Application.Features.Users.Queries.GetUsers;
+﻿using Application.Users.Commands.Create;
+using Application.Users.Commands.Delete;
+using Application.Users.Commands.Update;
+using Application.Users.Queries.GetById;
+using Application.Users.Queries.GetUsers;
 using Asp.Versioning;
 using Asp.Versioning.Builder;
 using Carter;
